@@ -19,6 +19,40 @@ export const productController = async (req, res) => {
   //   return res.status(200).json({ data: existProduct });
   // }
 
+  //--------------------------------------------- Simple OFFSET Pagination START ---------------------------------------------
+  //   const filter = {};
+
+  // if (search) {
+  //   const regex = new RegExp(search, "i");
+  //   filter.$or = [{ name: regex }, { brand: regex }];
+  // }
+
+  // const sort = {
+  //   [sortBy]: sortByOrder?.toString().toLowerCase() === "asc" ? 1 : -1,
+  // };
+
+  // const pageNumber = Number(page) || 1;
+  // const limitNumber = Number(limit) || 10;
+  // const skip = (pageNumber - 1) * limitNumber;
+
+  // const [products, count] = await Promise.all([
+  //   Product.find(filter)
+  //     .sort(sort)
+  //     .skip(skip)
+  //     .limit(limitNumber),
+
+  //   Product.countDocuments(filter),
+  // ]);
+
+  // res.status(200).json({
+  //   success: true,
+  //   count,
+  //   currentPage: pageNumber,
+  //   totalPages: Math.ceil(count / limitNumber),
+  //   products,
+  // });
+  //--------------------------------------------- Simple OFFSET Pagination END ---------------------------------------------
+
   const filter = {};
 
   if (cursor) {
