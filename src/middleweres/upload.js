@@ -1,9 +1,16 @@
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import { fileURLToPath } from "url";
 
+// Get current file directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Upload folder path
 const uploadDir = path.join(__dirname, "../../uploads");
 
+// Create uploads folder if it doesn't exist
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
@@ -36,12 +43,12 @@ const upload = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 5 * 1024 * 1024,
+    fileSize: 5 * 1024 * 1024, // 5 MB
   },
 });
 
-// Single image
+// Single image upload
 export const uploadSingle = upload.single("image");
 
-// Multiple images (maximum 5)
+// Multiple image upload (maximum 5)
 export const uploadMultiple = upload.array("images", 5);

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { Product } from "../models/product.model.js";
-import redisClient from "../config/redis.js";
-import { emailQueue } from "../queues/email.queue.js";
+// import redisClient from "../config/redis.js"; // Enable after Redis is running.
+// import { emailQueue } from "../queues/email.queue.js"; // BullMQ also requires Redis.
 
 export const productController = async (req, res) => {
   console.log(":::::::::::::::", req.query);
@@ -12,12 +12,12 @@ export const productController = async (req, res) => {
   const sortByOrder = req.query.sortByOrder;
   // const filterby = "Apple"
 
-  const cacheKey = `products:${limit}:${cursor}:${search}`;
-  const existProduct = await redisClient.get(cacheKey);
-
-  if (existProduct) {
-    return res.status(200).json({ data: existProduct });
-  }
+  // Redis product caching is disabled until Redis is running.
+  // const cacheKey = `products:${limit}:${cursor}:${search}`;
+  // const existProduct = await redisClient.get(cacheKey);
+  // if (existProduct) {
+  //   return res.status(200).json({ data: existProduct });
+  // }
 
   const filter = {};
 
