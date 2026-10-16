@@ -138,6 +138,73 @@ export const productController = async (req, res) => {
 };
 
 export const addProductController = async (req, res) => {
-  const response = await Product.create(req.body);
-  console.log("response::::::::", response);
+  try {
+    const response = await Product.create(req.body);
+
+    return res.status(201).json({
+      message: "Product added successfully",
+      product: response,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Failed to add product",
+      error: error.message,
+    });
+  }
+};
+
+export const editProductController = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updatedProduct = await Product.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedProduct) {
+      return res.status(404).json({
+        message: "Product not found",
+      });
+    }
+
+    // Emit event to connected Socket.IO clients
+    // const io = getIo();
+
+    // io.emit("productUpdated", updatedProduct);
+
+    return res.status(200).json({
+      message: "Product updated successfully",
+      product: updatedProduct,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Failed to update product",
+      error: error.message,
+    });
+  }
+};
+
+export const deleteProductController = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedProduct = await Product.findByIdAndDelete(id);
+
+    if (!deletedProduct) {
+      return res.status(404).json({
+        message: "Product not found",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Product deleted successfully",
+      product: deletedProduct,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Failed to delete product",
+      error: error.message,
+    });
+  }
 };

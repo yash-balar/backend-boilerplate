@@ -19,6 +19,8 @@ router.get("/products", productController);
 
 router.post("/products", addProductController);
 
+// router.post("/products",  requirePermission(PERMISSIONS.PROFILE_UPDATE), addProductController);
+
 // router.post("/profile", uploadSingle, (req, res) => {
 //   if (!req.file) {
 //     return res.status(400).json({
